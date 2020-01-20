@@ -4,7 +4,8 @@
   "description": "my first socket.io app",
   "private": true,
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "devstart": "supervisor ./bin/www"
   },
   "dependencies": {
     "express": "^4.17.1",
