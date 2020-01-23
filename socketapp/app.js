@@ -1,21 +1,9 @@
 let express = require('express');
 let app =express();
-let http = require('http').Server(app);
-// let mysql = require('mysql');
+let users =require('./routes/users');
 
-// let connection = mysql.createConnection({
-//   host: 'localhost',
-//   user: 'root',
-//   password: 'root',
-//   database: 'Mysql1'
-// })
-// let sql = 'select * from user';
-// connection.connect();
- 
-// connection.query(sql, function (error, results, fields) {
-//   if (error) throw error;
-//   console.log('The userTable is: ', results);
-// });
+app.use('/api/user',users);
+
 app.use(express.static(__dirname + '/views'))
 app.get('/haha',function(req,res) {
   res.send('haha.hello world')

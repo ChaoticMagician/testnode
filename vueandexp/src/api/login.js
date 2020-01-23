@@ -2,7 +2,7 @@ import {service}from './request.js'
 
 export function login(username, password) {
   let requestdata =  service({
-    url: '/api/Token',
+    url: '/api/login',
     method: 'post',
     data: {
       id: 0,
@@ -15,6 +15,13 @@ export function login(username, password) {
       realName: "",
       phone: "",
     }
+  });
+  return requestdata;
+};
+export function getuserlist() {
+  let requestdata =  service({
+    url: '/api/user',
+    method: 'get',
   });
   return requestdata;
 };

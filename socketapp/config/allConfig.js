@@ -1,12 +1,11 @@
 
 exports.serverInfo =  {
-  port:'3001',
+  port:'8199',
   view:'/views'
 };
 exports.databaseInfo={
   host: 'localhost',
   user: 'root',
   password: 'root',
-  database: 'Mysql1'
+  database: 'alltest'
 };
-// module.exports = allconfig;
