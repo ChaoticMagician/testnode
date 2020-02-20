@@ -41,44 +41,44 @@
             <el-table-column
               align='center'
               fixed
-              prop="name"
-              label="种类名"
+              prop="userid"
+              label="用户ID"
               width="180">
             </el-table-column>
             <el-table-column
               align='center'
-              prop="goodsCode"
-              label="商品ID"
+              prop="username"
+              label="用户名称"
               width="180">
             </el-table-column>
             <el-table-column
               align='center'
-              prop="price_In"
-              label="进价"
+              prop="email"
+              label="邮箱"
               width="150">
             </el-table-column>
             <el-table-column
               align='center'
-              prop="price_Out"
-              label="售价"
+              prop="phone"
+              label="电话"
               width="150">
             </el-table-column>
             <el-table-column
               align='center'
-              prop="category"
-              label="类别"
+              prop="duty"
+              label="职位"
               width="150">
             </el-table-column>
             <el-table-column
               align='center'
-              prop="label"
-              label="品牌"
+              prop="role"
+              label="角色"
               width="150">
             </el-table-column>
             <el-table-column
               align='center'
-              prop="machine"
-              label="机号"
+              prop="level"
+              label="等级"
               width="150">
             </el-table-column>
             <el-table-column
@@ -129,57 +129,53 @@
             商品图片：
             <img-input :ChangeGoodsType='ChangeGoodsType' :imgDadaObj='thisGoodsInfo'  >
             </img-input>
-            种类名：
+            用户ID：
             <el-input
               class="goodsFormInput"
               :disabled="ChangeGoodsType==4"
               placeholder="请输入"
-              v-model="thisGoodsInfo.name"
+              v-model="thisGoodsInfo.userid"
             ></el-input><br/>
-            进价：
-            <el-input-number
-              :disabled="ChangeGoodsType==4"
+            用户昵称：
+            <el-input
               class="goodsFormInput"
-              :precision="2"
-              :step="0.1"
-              v-model="thisGoodsInfo.price_In"
-              :min="1"
-            ></el-input-number>
-            售价：
-            <el-input-number
               :disabled="ChangeGoodsType==4"
+              placeholder="请输入"
+              v-model="thisGoodsInfo.username"
+            ></el-input><br/>
+            密码：
+            <el-input
               class="goodsFormInput"
-              :precision="2"
-              :step="0.1"
-              v-model="thisGoodsInfo.price_Out"
-              :min="1"
-            ></el-input-number><br/>
-            类别：
+              :disabled="ChangeGoodsType==4"
+              placeholder="请输入"
+              v-model="thisGoodsInfo.password"
+            ></el-input><br/>
+            <!-- 类别：
             <el-select
               :disabled="ChangeGoodsType==4"
               v-model="thisGoodsInfo.category"
               placeholder="类别">
               <el-option
-                v-for="item in this.$store.state.dictionaryData.goodsType"
+                v-for="item in this.$store.state.dictionaryData.userType"
                 :key="item.value"
                 :label="item.label"
-                :value="item.label">
+                :value="item.value">
               </el-option>
-            </el-select>
-            品牌：
+            </el-select> -->
+            邮箱：
             <el-input
               class="goodsFormInput"
               :disabled="ChangeGoodsType==4"
               placeholder="请输入"
-              v-model="thisGoodsInfo.label"
-            ></el-input><br/>
-            机号：
-            <el-input
-              class="goodsFormInput"
-              :disabled="ChangeGoodsType==4"
-              placeholder="请输入"
-              v-model="thisGoodsInfo.machine"
+              v-model="thisGoodsInfo.email"
             ></el-input>
+            手机号：
+            <el-input
+              class="goodsFormInput"
+              :disabled="ChangeGoodsType==4"
+              placeholder="请输入"
+              v-model="thisGoodsInfo.phone"
+            ></el-input><br/>
             其他：
             <el-input
               class="goodsFormInput"
@@ -205,16 +201,17 @@ import imgInput from './imgInput/imgInput'
         ChangeGoodsType:1,
         goodsList: [],
         thisGoodsInfo:{
-          id: 12,
-          goodsCode: 'dsfsdfg',
-          name: 'string',
-          price_In: 12.5,
-          price_Out: 1864.8,
-          category: '生活日化',
-          label: 'asd',
-          machine: '16546416fdhgdf',
-          img: '',
-          other: 'fdkhjgaoifiwejrgf',
+          id: "0003",
+          userid: "admin1",
+          username: "副管理员",
+          password: "111111",
+          email: null,
+          phone: "",
+          duty: null,
+          role: 1,
+          level: 0,
+          img: null,
+          other: null,
         }
       }
     },
@@ -229,6 +226,8 @@ import imgInput from './imgInput/imgInput'
         getGoodsList()
         .then((response)=>{
           this.goodsList = response.data.data;
+          console.log(response);
+          
         })
         .then(
           ()=>{this.ChangeGoodsType = 1;}
@@ -244,15 +243,16 @@ import imgInput from './imgInput/imgInput'
       },
       gotoAddGoods:function() {
         this.thisGoodsInfo={
-          goodsCode: '',
-          name: '',
-          price_In: 0,
-          price_Out: 0,
-          category: '',
-          label: '',
-          machine: '',
-          img: '',
-          other: '',
+          userid: "",
+          username: "",
+          password: "",
+          email: "",
+          phone: "",
+          duty: null,
+          role: "",
+          level: 0,
+          img: null,
+          other: null,
         }
         this.ChangeGoodsType = 2;
       },
@@ -261,6 +261,8 @@ import imgInput from './imgInput/imgInput'
         this.ChangeGoodsType = 4;
       },
       gotoChangeGoods:function(goodsrow) {
+        console.log(goodsrow);
+        
         this.thisGoodsInfo =  goodsrow;
         this.ChangeGoodsType = 3;
       },
@@ -268,8 +270,10 @@ import imgInput from './imgInput/imgInput'
         this.ChangeGoodsType = 1;
       },
       addGoodsMet:function() {
-        addGoogs( this.thisGoodsInfo)
+        addGoogs(this.thisGoodsInfo)
         .then((response)=>{
+          console.log(response);
+          console.log(this.thisGoodsInfo);
           if ( response.data.data==true ) {
             this.$message.success({
               message:'添加成功',
@@ -288,7 +292,7 @@ import imgInput from './imgInput/imgInput'
         })
       },
       deleteGoodsMet:function(goodsrow) {
-        deleteGoogs(goodsrow.goodsCode)
+        deleteGoogs(goodsrow.id)
         .then((response)=>{
           if ( response.data.data==true ) {
             this.$message.success({

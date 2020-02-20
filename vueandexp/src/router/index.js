@@ -10,6 +10,11 @@ const routes = [
     component: () => import("../views/login.vue")
   },
   {
+    path: "/imapp",
+    name: "imapp",
+    component: () => import("../views/imapppage.vue")
+  },
+  {
     path: "/home",
     name: "home",
     redirect: '/homepage',//重定向首页

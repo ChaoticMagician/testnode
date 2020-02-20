@@ -83,12 +83,12 @@ export default {
   background: rgba(206, 206, 206, 0.25);
   background-repeat: no-repeat;
   background-size: 100% 100%;
-  width: 28%;
-  height: 40%;
+  width: 20%;
+  height: 36%;
   padding: 15px 30px;
   position: relative;
-  top: 28%;
-  left: 36%;
+  top: 26%;
+  left: 40%;
   border: 1px solid rgba(0, 0, 0, 0.19);
   border-radius: 5px;
   box-shadow: 0px 1px 2px 0px #73737382;
@@ -97,7 +97,9 @@ export default {
   font-weight:500;
 }
 .title{
-  margin:auto;
+  font-size: 40px;
+  text-align: center;
+  color: darkkhaki;
 }
 .el-input{
   padding: 2% 0;

@@ -1,6 +1,8 @@
 var app = require('../app');
 var http = require('http');
 var {serverInfo} = require('../config/allConfig');
+
+var moment = require('moment');//时间处理
 /**
  * Get port from environment and store in Express.
  */
@@ -22,11 +24,16 @@ io.on('connection',function(socket) {
   console.log(
     '这是socket'
     );
-  socket.on('chat message', function(msg){
-    console.log('message: ' + msg);
-    io.emit('chat message', msg);
-  });
-  socket.on('disconnect', function(){
+    socket.on('IM_TEST', function(msg){
+      io.emit('IM_TEST', {time:moment().format('HH:mm:ss'),message:msg});
+    });
+    socket.on('IM_DICE', function(msg){
+      let num = Math.floor(Math.random()*msg.type)+1;
+      console.log(msg,num);
+      let talkString = `鉴定成果:${num}`
+      io.emit('IM_TEST', {time:moment().format('HH:mm:ss'),message:talkString});
+    });
+      socket.on('disconnect', function(){
     console.log('user disconnected');
   });
 });

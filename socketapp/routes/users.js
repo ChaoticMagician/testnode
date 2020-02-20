@@ -7,10 +7,9 @@ var {databaseInfo} = require('../config/allConfig');
 var pool = mysql.createPool(databaseInfo);
 
 
-
 //我要执行的mysql语句
 var sql = 'SELECT * from user';
-router.get('/', function (req, res, fields) {
+router.get('/', function (req, res,next) {
  
   //从连接池获取连接
   pool.getConnection(function (err, conn) {

@@ -7,5 +7,6 @@ exports.databaseInfo={
   host: 'localhost',
   user: 'root',
   password: 'root',
-  database: 'alltest'
+  database: 'alltest',
+  port: 3306
 };

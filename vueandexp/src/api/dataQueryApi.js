@@ -2,14 +2,14 @@ import {service}from './request.js'
 //产品种类列表、增、删、改、查、
 export function getGoodsList() {
   let requestdata =  service({
-    url: '/api/Goods',
+    url: '/api/goods',
     method: 'get',
   });
   return requestdata;
 };
 export function addGoogs(goodsInfo) {
   let requestdata =  service({
-    url: '/api/Goods',
+    url: '/api/goods',
     method: 'post',
     data: goodsInfo
   });
@@ -17,14 +17,14 @@ export function addGoogs(goodsInfo) {
 };
 export function deleteGoogs(goodsCode) {
   let requestdata =  service({
-    url: '/api/Goods/'+goodsCode,
+    url: '/api/goods/'+goodsCode,
     method: 'delete',
   });
   return requestdata;
 };
 export function changeGoogs(goodsInfo) {
   let requestdata =  service({
-    url: '/api/Goods/'+goodsInfo.goodsCode,
+    url: '/api/goods/'+goodsInfo.goodsCode,
     method: 'put',
     data:goodsInfo
   });
@@ -32,7 +32,7 @@ export function changeGoogs(goodsInfo) {
 };
 export function getGoogs(goodsCode) {
   let requestdata =  service({
-    url: '/api/Goods/'+goodsCode,
+    url: '/api/goods/'+goodsCode,
     method: 'get',
   });
   return requestdata;
