@@ -1,19 +1,12 @@
 import {service}from './request.js'
 
-export function login(username, password) {
+export function login(userID, password) {
   let requestdata =  service({
-    url: '/api/login',
+    url: '/api/user/login',
     method: 'post',
     data: {
-      id: 0,
-      userName: username,
       passWord: password,
-      duty: "",
-      userId: "",
-      role: "",
-      other: "",
-      realName: "",
-      phone: "",
+      userId: userID,
     }
   });
   return requestdata;

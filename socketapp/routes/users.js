@@ -1,49 +1,58 @@
 var express = require('express');
 var router = express.Router();
-var mysql = require('mysql'); //引入mysql 模块
-var {databaseInfo} = require('../config/allConfig');
- 
-//创建mysql连接池
-var pool = mysql.createPool(databaseInfo);
+var bodyParser = require('body-parser');
+
+let {query,addInfo,deleteInfo,chanceInfo,setRemark} = require('../dbMethods/dbpool');
+let {queryGoodsList,addGoodsSQL,deleteGoodsSQL,chanceGoodsSQL,chanceSomeGoods,queryUser} = require('../dbMethods/userSQL');
+
+//设置接口的标签（remark）字段
 
 
-//我要执行的mysql语句
-var sql = 'SELECT * from user';
-router.get('/', function (req, res,next) {
- 
-  //从连接池获取连接
-  pool.getConnection(function (err, conn) {
-    if (err) {
-      res.send(JSON.stringify({
-        code: '0x000000000',
-        status: 0,
-        remark: '服务器请求异常',
-        message: null,
-        data: null
-      }));
+//用户登录
+router.post('/login',bodyParser.json({limit:'2mb'}),function(req, res,next) {
+  setRemark('用户登录接口');
+  query(queryUser(req.body.userId),(vals)=>{
+    if (vals.data!=false&&req.body.passWord==vals.data[0].password) {
+        vals.state='success';
+        vals.message='登录成功'
     } else {
-      conn.query(sql, function (qerr, vals, fields) {
-        if (qerr) {
-          res.send(JSON.stringify({
-            code: '0x000000000',
-            status: 0,
-            remark: '获取用户列表',
-            message: '请求失败',
-            data: null
-          }));
-        }
-        //释放连接
-        conn.release();
-        res.send(JSON.stringify({
-          code: '0x000000000',
-          status: 1,
-          remark: '获取用户列表',
-          message: '请求成功',
-          data: vals
-        }));
-      });
+        vals.state='failure';
+        vals.message='用户名或密码错误';
+        vals.data = []
     }
+    res.send(JSON.stringify(vals));
   });
 });
- 
+
+//增加数据
+router.post('/',bodyParser.json({limit:'2mb'}), function (req, res, next) {
+    let {sql,add_value} = addGoodsSQL(req.body);
+    addInfo(sql ,add_value , (result)=> {
+        //响应内容 增加数据成功
+        req.body.id = result.data.insertId;
+        res.send(req.body) 
+    });
+})
+
+//删除数据
+router.delete('/:id',function(req, res,next) {
+    deleteInfo(deleteGoodsSQL(req.params.id),(vals)=>{
+        res.send(JSON.stringify(vals));
+    })
+});
+//修改数据
+router.put('/:id',bodyParser.json({limit:'2mb'}), function(req, res,next) {
+    let {sql,add_value} = chanceGoodsSQL(req.params.id,req.body)
+    chanceInfo(sql ,add_value ,(vals)=>{
+        res.send(JSON.stringify(vals));
+        // res.send(JSON.stringify({sql,add_value}));
+    })
+});
+//修改部分数据
+router.patch('/:id',bodyParser.json({limit:'2mb'}), function(req, res,next) {
+    let {sql,add_value} = chanceSomeGoods(req.params.id,req.body)
+    chanceInfo(sql ,add_value ,(vals)=>{
+        res.send(JSON.stringify(vals));
+    })
+});
 module.exports = router;

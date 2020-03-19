@@ -23,7 +23,7 @@ exports.query = function(sql,callback){
                 code: '500',
                 remark: remarkInfo,
                 message: '数据库链接错误',
-                data: vals
+                data: null
             }
             callback(reqdata);
             console.log('数据库链接错误'+err);
@@ -48,7 +48,7 @@ exports.query = function(sql,callback){
                         code: '-1',
                         remark: remarkInfo,
                         message: 'sql查询失误',
-                        data: null
+                        data: []
                     }
                     callback(reqdata); 
                 }
@@ -64,7 +64,7 @@ exports.addInfo = function(sql,add_value,callback){
                 code: '500',
                 remark: remarkInfo,
                 message: '数据库链接错误',
-                data: vals
+                data: null
             }
             callback(reqdata);
             console.log('数据库链接错误'+err);
@@ -105,7 +105,7 @@ exports.deleteInfo = function(sql,callback){
                 code: '500',
                 remark: remarkInfo,
                 message: '数据库链接错误',
-                data: vals
+                data: null
             }
             callback(reqdata);
             console.log('数据库链接错误'+err);
@@ -146,7 +146,7 @@ exports.chanceInfo = function(sql,add_value,callback){
                 code: '500',
                 remark: remarkInfo,
                 message: '数据库链接错误',
-                data: vals
+                data: null
             }
             callback(reqdata);
             console.log('数据库链接错误'+err);

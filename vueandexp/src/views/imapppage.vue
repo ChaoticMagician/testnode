@@ -168,7 +168,7 @@ export default {
 }
 </style>
 <style>
-.el-input__inner{
+.modelElement .el-input__inner{
   height:inherit;
   font-size: x-large;
 }

@@ -4,8 +4,8 @@
       <form id="loginId" >
         <div class="title" >骰子女神的呼唤</div>
         <el-input
-          placeholder="用户名"
-          v-model="username">
+          placeholder="用户ID"
+          v-model="userID">
           <div slot="prefix">
             <i  class=" loginicon iconfont icon-xiazai"/>|
           </div>
@@ -18,7 +18,7 @@
             <i  class=" loginicon iconfont icon-mima"/>|
           </div>
         </el-input>
-        <el-button type="success" @click="test" >登陆</el-button>
+        <el-button type="success" @click="loginsuccess" >登陆</el-button>
       </form>
     </el-card>
   </el-container>
@@ -30,7 +30,7 @@ export default {
   name: 'login',
   data() {
     return {
-      username:'',
+      userID:'',
       password:'',
       checked:false,
     }
@@ -39,35 +39,24 @@ export default {
     loginsuccess(){
       let that = this;
       // let md5 = require('js-md5');
-      // login(md5(this.username),md5(this.password))
-      login(this.username,this.password)
+      // login(md5(this.userID),md5(this.password))
+      login(this.userID,this.password)
       .then(function (response) {
-        console.log(response.data);
-
-        // if (response.data.data == '') {
-        //   that.$message.error({
-        //     message:''+response.data.message,
-        //   })
-        // } else {
-        //   // console.log('登陆成功');
-        //   // that.$store.commit('getUserInfo',response.data.data);
-        //   that.$router.replace({path:'/homepage'});
-        // }
+        if (response.data.code != '200'||response.data.state != 'success') {
+          console.log(response.data);
+          that.$message.error({
+            message:''+response.data.message,
+          })
+        }else {
+          // console.log('登陆成功');
+          that.$store.commit('getUserInfo',response.data.data);
+          that.$router.replace({path:'/imapp'});
+        }
       })
       .catch(function (response) {
         console.error(response);
       })
     },
-    test(){
-      getuserlist()
-      .then(function (response) {
-        console.log(response.data);
-      })
-      .catch(function (response) {
-        console.error(response);
-      })
-
-    }
   }
 }
 </script>
